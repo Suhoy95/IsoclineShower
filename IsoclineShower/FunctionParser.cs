@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -16,25 +17,72 @@ namespace IsoclineShower
 
         public static INode Parse(String expression)
         {
-            var statements = new List<INode>();
+            var statements = new Stack<INode>();
+            var operations = new Stack<String>();
 
             for (var i = 0; i < expression.Length; i++)
             {
-                if (Char.IsDigit(expression[i]))
+                if (IsOperation(expression, i))
                 {
-                    statements.Add(GetNumber(expression, ref i));
+                    operations.Push(GetOperation(expression, ref i));
+                }
+                else if (Char.IsDigit(expression[i]))
+                {
+                    statements.Push(GetNumber(expression, ref i));
                 }
                 else if(Char.IsLetter(expression[i]))
                 {
-                    statements.Add(GetVariable(expression, ref i));
+                    statements.Push(GetVariable(expression, ref i));
                 }
-
             }
 
-            return statements.Last();
+            
+
+            return DeployStack(statements, operations);
         }
 
-        
+        private static INode DeployStack(Stack<INode> statements, Stack<string> operations)
+        {
+            while (operations.Any())
+            {
+                var operationName = operations.Pop();
+                statements.Push(CreateOperation(operationName, statements));
+            }
+
+            if(statements.Count() == 1)
+                return statements.Pop();
+
+            throw new Exception("Too few operators");
+        }
+
+        private static INode CreateOperation(string operationName, Stack<INode> statements)
+        {
+            switch (operationName)
+            {
+                case "+":
+                    return new Sum(statements.Pop(), statements.Pop());
+            }
+
+            throw  new Exception("Wrong operation");
+        }
+
+        private static String[] operators = new[] { "+", "-", "*", "/"};
+
+        private static bool IsOperation(String expression, int i)
+        {
+            return operators.Any(op => 
+                                String.Equals(expression.Substring(i, op.Length), op));
+        }
+
+        private static String GetOperation(String expression, ref int i)
+        {
+            var position = i;
+            var result = operators.First(op => String.Equals(expression.Substring(position, op.Length), op));
+
+            i += result.Length;
+
+            return result;
+        }
 
         private static Constant GetNumber(String expression, ref int i)
         {
@@ -58,5 +106,7 @@ namespace IsoclineShower
 
             return new Variable(variableName);
         }
+
+
     }
 }

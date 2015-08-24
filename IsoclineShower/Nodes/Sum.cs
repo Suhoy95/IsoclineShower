@@ -8,24 +8,18 @@ namespace IsoclineShower.Nodes
 {
     class Sum : INode
     {
-        private List<INode> summands;
+        private INode first;
+        private INode second;
 
-        public Sum(List<INode> summands)
+        public Sum(INode first, INode second)
         {
-            this.summands = summands;
+            this.first = first;
+            this.second = second;
         }
 
         public double Value(Dictionary<string, double> variables)
         {
-            double result = 0.0;
-
-            foreach (var summand in summands)
-            {
-                result += summand.Value(variables);
-            }
-
-            return result;
-            //return summands.Sum(summand => summand.Value(variables));
+            return first.Value(variables) + second.Value(variables);
         }
     }
 }
