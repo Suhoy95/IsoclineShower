@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,12 +40,12 @@ namespace IsoclineShower
         {
             int position = i;
             while (i < expression.Length && 
-                    (Char.IsDigit(expression[i]) || expression[i] == ','))
+                    (Char.IsDigit(expression[i]) || expression[i] == '.'))
                 i++;
 
             var number = expression.Substring(position, i - position);
 
-            return new Constant(double.Parse(number));
+            return new Constant(double.Parse(number, CultureInfo.InvariantCulture));
         }
 
         private static Variable GetVariable(string expression, ref int i)

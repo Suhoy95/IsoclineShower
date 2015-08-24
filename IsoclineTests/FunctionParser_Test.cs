@@ -15,7 +15,7 @@ namespace IsoclineTests
         [TestMethod]
         public void ParseConstant()
         {
-            var node = FunctionParser.Parse("12,5");
+            var node = FunctionParser.Parse("12.5");
             Assert.AreEqual(12.5, node.Value(), delta);
         }
 
