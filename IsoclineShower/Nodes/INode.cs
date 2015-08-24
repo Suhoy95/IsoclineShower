@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace IsoclineShower.Nodes
 {
-    interface INode
+    public interface INode
     {
-        double Value(Dictionary<String, double> variables);
+        double Value(Dictionary<String, double> variables = null);
     }
 }
