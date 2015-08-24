@@ -9,6 +9,7 @@ namespace IsoclineTests
         [TestMethod]
         public void TestMethod1()
         {
+
         }
     }
 }

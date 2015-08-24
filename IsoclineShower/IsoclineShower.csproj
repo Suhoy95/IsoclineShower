@@ -41,6 +41,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Form.cs" />
+    <Compile Include="FunctionExstensions.cs" />
+    <Compile Include="FunctionParser.cs" />
+    <Compile Include="GraphMaster.cs" />
+    <Compile Include="Nodes\Constant.cs" />
+    <Compile Include="Nodes\INode.cs" />
+    <Compile Include="Nodes\Product.cs" />
+    <Compile Include="Nodes\Sum.cs" />
+    <Compile Include="Nodes\Variable.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
