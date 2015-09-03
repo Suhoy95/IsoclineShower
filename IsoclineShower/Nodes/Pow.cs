@@ -20,9 +20,7 @@ namespace IsoclineShower.Nodes
         public double Value(Dictionary<string, double> variables)
         {
             var newBase = first.Value(variables);
-            if (newBase >= 0)
-                return Math.Pow(first.Value(variables), second.Value(variables));
-            throw new Exception("Отрицательное основание");
+            return Math.Pow(first.Value(variables), second.Value(variables));
         }
     }
 }
