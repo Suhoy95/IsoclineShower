@@ -22,7 +22,7 @@ namespace IsoclineShower
             };
         }
 
-        public static Func<double, double, double>CreateFXY(String experssion)
+        public static Func<double, double, double> CreateFXY(String experssion)
         {
             var node = Parse(experssion);
             return (double x, double y) =>
@@ -177,9 +177,12 @@ namespace IsoclineShower
             throw  new Exception("Wrong operation");
         }
 
-        private static String[] consts = new[] { "e", "pi" };
+        private static String[] consts = { "e", "pi" };
 
-        private static String[] operators = new[] { "+", "-", "*", "/", "sin", "cos", "tg", "asin", "acos", "atg", "actg", "ctg", "^", "log"};
+        private static String[] operators = { "+", "-", "*", "/", 
+                                              "sin", "cos", "tg", "ctg",
+                                              "asin", "acos", "atg", "actg",  
+                                              "^", "log"};
 
         private static bool IsConstant(String expression, int i)
         {
@@ -195,7 +198,8 @@ namespace IsoclineShower
         private static String GetConst(String expression, ref int i)
         {
             var position = i;
-            var result = consts.First(cnst => position + cnst.Length <= expression.Length && String.Equals(expression.Substring(position, cnst.Length), cnst));
+            var result = consts.First(cnst => position + cnst.Length <= expression.Length && 
+                                              String.Equals(expression.Substring(position, cnst.Length), cnst));
 
             i += result.Length;
 
@@ -233,23 +237,11 @@ namespace IsoclineShower
 
             return new Variable(variableName);
         }
-        private static Dictionary<string, int> Priority = new Dictionary<string, int>() {
-                                                                                         {"+", 0},
-                                                                                         {"*", 1},
-                                                                                         {"-", 0},
-                                                                                         {"/", 1},
-                                                                                         {"(", -1},
-                                                                                         {"-?", 3},
-                                                                                         {"^", 2},
-                                                                                         {"sin", 4},
-                                                                                         {"cos", 4},
-                                                                                         {"tg", 4},
-                                                                                         {"ctg", 4},
-                                                                                         {"asin", 4},
-                                                                                         {"acos", 4},
-                                                                                         {"atg", 4},
-                                                                                         {"actg", 4},
-                                                                                         {"log", 4}
-                                                                                        };
+
+        private static Dictionary<string, int> Priority = 
+            new Dictionary<string, int> { {"+", 0}, {"*", 1}, {"-", 0}, {"/", 1}, 
+                                          {"(", -1}, {"-?", 3}, {"^", 2}, {"sin", 4},
+                                          {"cos", 4},{"tg", 4}, {"ctg", 4}, {"asin", 4},
+                                          {"acos", 4}, {"atg", 4}, {"actg", 4}, {"log", 4} };
     }
 }

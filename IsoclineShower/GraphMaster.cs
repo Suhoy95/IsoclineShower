@@ -9,13 +9,19 @@ namespace IsoclineShower
 {
     class GraphMaster
     {
-        private static double min = -10;
-        private static double max = 10;
-        private static int width;
-        private static int height;
+        private double min = -10;
+        private double max = 10;
+        private int width;
+        private int height;
         private static Font font = new Font("Times New Roman", 14);
 
-        public static Image CreateGraph(int w, int h, Action<Graphics> drawing)
+        public GraphMaster(double _min, double _max)
+        {
+            min = _min;
+            max = _max;
+        }
+
+        public Image CreateGraph(int w, int h, Action<Graphics> drawing)
         {
             width = w;
             height = h;
@@ -29,25 +35,26 @@ namespace IsoclineShower
             return bmp;
         }
 
-        private static void DrawCoord(Graphics g)
+        private void DrawCoord(Graphics g)
         {
             g.DrawLine(Pens.Black, Transform(0, min), Transform(0, max));
             g.DrawLine(Pens.Black, Transform(min, 0), Transform(max, 0));
-            for (var i = min; i < max; i += 1.0)
+            var step = (max - min) / 20;
+            for (var i = min; i < max; i += step)
             {
-                g.DrawString(String.Format("{0}", i), font, Brushes.Black, Transform(0, i));
-                g.DrawString(String.Format("{0}", i), font, Brushes.Black, Transform(i, 0));
+                g.DrawString(String.Format("{0}", Math.Round(i, 2)), font, Brushes.Black, Transform(0, i));
+                g.DrawString(String.Format("{0}", Math.Round(i, 2)), font, Brushes.Black, Transform(i, 0));
             }
         }
 
-        private static Point Transform(double x, double y)
+        private Point Transform(double x, double y)
         {
 
             return new Point((int)((x + (max - min) / 2) / (max - min) * width),
                              (int)((-y + (max - min) / 2) / (max - min) * height));
         }
 
-        public static void DrawFX(Graphics g, Func<double, double> f)
+        public void DrawFX(Graphics g, Func<double, double> f)
         {
             for(var i = min; i <= max; i+= 0.001)
             {
@@ -58,9 +65,9 @@ namespace IsoclineShower
             }
         }
 
-        public static void DrawSolution(Graphics g,  Func<double, double, double> dy)
+        public void DrawSolution(Graphics g,  Func<double, double, double> dy, double x0, double y0)
         {
-            double x = 0, y = -2, step = 0.001;
+            double x = x0, y = y0, step = 0.001;
             while(x <= max)
             {
                 var k = dy(x, y);
@@ -73,7 +80,7 @@ namespace IsoclineShower
                 catch { };
                 x = nx; y = ny;
             }
-            x = 0; y = -2;
+            x = x0; y = y0;
             while (x >= min)
             {
                 var k = dy(x, y);
