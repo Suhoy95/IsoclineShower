@@ -70,7 +70,7 @@ namespace IsoclineShower
             var listOfPoints = new List<Tuple<double, double>>();
             listOfPoints.Add(point);
             var gradF = Grad(f);
-      //      while ()
+            //TODO
             return listOfPoints;
         }
     }
