@@ -31,9 +31,17 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,20 +49,40 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form.cs" />
+    <Compile Include="Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FunctionExstensions.cs" />
     <Compile Include="FunctionParser.cs" />
     <Compile Include="GraphMaster.cs" />
+    <Compile Include="Nodes\Acos.cs" />
+    <Compile Include="Nodes\Actg.cs" />
+    <Compile Include="Nodes\Asin.cs" />
+    <Compile Include="Nodes\Atg.cs" />
     <Compile Include="Nodes\Constant.cs" />
+    <Compile Include="Nodes\Cos.cs" />
+    <Compile Include="Nodes\Ctg.cs" />
     <Compile Include="Nodes\INode.cs" />
-    <Compile Include="Nodes\Product.cs" />
+    <Compile Include="Nodes\Log.cs" />
+    <Compile Include="Nodes\Multiplication.cs" />
+    <Compile Include="Nodes\Pow.cs" />
+    <Compile Include="Nodes\Segmentation.cs" />
+    <Compile Include="Nodes\Sin.cs" />
+    <Compile Include="Nodes\Subtraction.cs" />
     <Compile Include="Nodes\Sum.cs" />
+    <Compile Include="Nodes\Tg.cs" />
+    <Compile Include="Nodes\UnaryMinus.cs" />
     <Compile Include="Nodes\Variable.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Form.resx">
+      <DependentUpon>Form.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
